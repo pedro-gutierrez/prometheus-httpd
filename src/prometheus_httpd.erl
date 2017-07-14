@@ -99,7 +99,7 @@ do(Info) ->
 
 start(_, _) ->
     prometheus_http_impl:setup(),
-    case prometheus_config:auto_start() of
+    case prometheus_http_config:auto_start() of
         false -> 
             supervisor:start_link({local, ?MODULE}, ?MODULE, []);
 
