@@ -29,7 +29,8 @@
 %%   ...
 %%   {prometheus_httpd, [{path, "/metrics"},
 %%                       {format, auto},
-%%                       {port, 8081}]},
+%%                       {port, 8081}
+%%                       {auto_start, true}]},
 %%   ...
 %%   ]}
 %% </pre>
@@ -97,8 +98,15 @@ do(Info) ->
 %% ===================================================================
 
 start(_, _) ->
-  prometheus_http_impl:setup(),
-  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+    prometheus_http_impl:setup(),
+    case prometheus_config:auto_start() of
+        false -> 
+            supervisor:start_link({local, ?MODULE}, ?MODULE, []);
+
+        true -> 
+            start(),
+            supervisor:start_link({local, ?MODULE}, ?MODULE, [])
+    end.
 
 stop(_) -> ok.
 

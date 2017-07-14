@@ -8,7 +8,8 @@
          registry/0,
          telemetry_registry/0,
          port/0,
-         authorization/0]).
+         authorization/0,
+         auto_start/0]).
 
 %% TODO: remove
 -define(PROMETHEUS_REGISTRY_TABLE, prometheus_registry_table).
@@ -20,17 +21,21 @@
 -define(DEFAULT_TELEMETRY_REGISTRY, default).
 -define(DEFAULT_AUTHORIZATION, false).
 -define(DEFAULT_PORT, 8081).
+-define(AUTO_START, false).
 
 -define(DEFAULT_CONFIG, [{path, ?DEFAULT_PATH},
                          {format, ?DEFAULT_FORMAT},
                          {registry, ?DEFAULT_REGISTRY},
                          {telemetry_registry, ?DEFAULT_TELEMETRY_REGISTRY},
                          {port, ?DEFAULT_PORT},
-                         {authorization, ?DEFAULT_AUTHORIZATION}]).
+                         {authorization, ?DEFAULT_AUTHORIZATION},
+                         {auto_start, ?AUTO_START}]).
 
 %%%===================================================================
 %%% API
 %%%===================================================================
+
+auto_start() -> get_value(auto_start, ?AUTO_START).
 
 path() -> get_value(path, ?DEFAULT_PATH).
 
